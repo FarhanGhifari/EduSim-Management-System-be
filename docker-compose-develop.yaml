@@ -1,0 +1,35 @@
+volumes:
+  pusdatin_database:
+
+networks:
+  desktop_pusdatin_2026:
+
+services:
+  pusdatin-database:
+    image: postgres:12-alpine
+    container_name: pusdatin-database
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: desktop_pusdatin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pusdatin2026
+    ports:
+      - "4001:5432"
+    volumes:
+      - pusdatin_database:/var/lib/postgresql/data
+      - ./desktop_pusdatin.sql:/docker-entrypoint-initdb.d/desktop_pusdatin.sql
+    networks:
+      - desktop_pusdatin_2026
+
+  pusdatin-be:
+    container_name: pusdatin-be
+    image: registry.falahtech.com/pusdatin-2026/backend/pusdatin-be:v0.0.1-alpha
+    ports:
+      - "4002:3000"
+    restart: unless-stopped
+    env_file:
+      - staging.env
+    volumes:
+      - ./storage:/app/storage
+    networks:
+      - desktop_pusdatin_2026

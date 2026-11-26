@@ -1,0 +1,1834 @@
+{
+  "info": {
+    "_postman_id": "c66998f4-efe9-49d4-bebe-98f10983e3a1",
+    "name": "Desktop Pusdatin 2026",
+    "description": "Postman collection lengkap untuk pengujian seluruh endpoint Auth, Dashboard, User Management, My Account (Profile), Module Management, Question Management, Class Management, dan Test Management.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48467695",
+    "_collection_link": "https://go.postman.co/collection/48467695-c66998f4-efe9-49d4-bebe-98f10983e3a1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data && response.data.jwt) {",
+                  "        pm.environment.set('token_admin', response.data.jwt);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin1\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/login",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "login"
+              ]
+            },
+            "description": "Login Admin (kredensial: admin1 / Password123!)"
+          },
+          "response": []
+        },
+        {
+          "name": "Login Siswa",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data && response.data.jwt) {",
+                  "        pm.environment.set(\"token_student\", response.data.jwt);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"siswa1\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/login",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "login"
+              ]
+            },
+            "description": "Login Siswa (kredensial: siswa1 / Password123!)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Counting",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/dashboard/counting",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "dashboard",
+                "counting"
+              ]
+            },
+            "description": "Mendapatkan statistik jumlah data untuk dashboard"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Get All Users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/users?page=1&limit=10",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Mendapatkan daftar pengguna"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Detail by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/users/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "1"
+              ]
+            },
+            "description": "Mendapatkan detail pengguna berdasarkan ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create New User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200 or 201', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"siswabaru_{{$timestamp}}\",\n  \"password\": \"Password123!\",\n  \"confirm_password\": \"Password123!\",\n  \"name\": \"Siswa Baru Testing\",\n  \"registration_number\": \"REG-2026\",\n  \"status\": \"Active\",\n  \"roleId\": 2,\n  \"class_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/users",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ]
+            },
+            "description": "Membuat pengguna baru"
+          },
+          "response": []
+        },
+        {
+          "name": "Import Users (Excel / CSV)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "value": null
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/users/import",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "import"
+              ]
+            },
+            "description": "Import pengguna dari file (perlu melampirkan file .xlsx/.csv di UI Postman)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"siswa1\",\n  \"name\": \"Budi Updated\",\n  \"status\": \"Active\",\n  \"roleId\": 2,\n  \"class_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/users/2",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "2"
+              ]
+            },
+            "description": "Memperbarui data pengguna berdasarkan ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/users/99999",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "99999"
+              ]
+            },
+            "description": "Menghapus pengguna berdasarkan ID"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "My Account",
+      "item": [
+        {
+          "name": "Get Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/profile",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profile"
+              ]
+            },
+            "description": "Mengambil data profil user yang sedang login"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile Info",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin1_updated\",\n  \"name\": \"Erick Updated\"\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/profile/info",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profile",
+                "info"
+              ]
+            },
+            "description": "Memperbarui informasi profil user"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"old_password\": \"Password123!\",\n  \"new_password\": \"PasswordBaru123!\",\n  \"confirm_password\": \"PasswordBaru123!\"\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/profile/password",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profile",
+                "password"
+              ]
+            },
+            "description": "Ubah password user"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Module Management",
+      "item": [
+        {
+          "name": "Get Modules (List)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/modules?page=1&limit=10&search=&type=&parentId=",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "modules"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "key": "type",
+                  "value": ""
+                },
+                {
+                  "key": "parentId",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Mengambil daftar modul / submodule / content dengan pagination dan filter (Admin & Siswa)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Module Detail by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/modules/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "modules",
+                "1"
+              ]
+            },
+            "description": "Mengambil detail modul/konten beserta hierarki module_name, submodule_name, learning materials, dan presigned URL aset untuk streaming/viewing (Admin & Siswa)"
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Module Asset",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data && response.data.length > 0) {",
+                  "        pm.environment.set(\"temp_asset_path\", response.data[0].path);",
+                  "        if (response.data[1]) {",
+                  "            pm.environment.set(\"temp_asset_path_2\", response.data[1].path);",
+                  "        }",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "files",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/modules/upload",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "modules",
+                "upload"
+              ]
+            },
+            "description": "Upload file media/dokumen via multipart/form-data ke backend server (Admin only). File disimpan sementara di folder temp/modules/assets/ sebelum dipindahkan ke folder permanen saat modul disimpan."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Module",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Web Development Best Practices\",\n  \"module_id\": 1,\n  \"submodule_id\": 6,\n  \"type\": \"content\",\n  \"learningMaterials\": [\n    {\n      \"description\": \"Deskripsi materi pembelajaran\",\n      \"assets\": [\n        {\n          \"title\": \"{{temp_asset_path}}\",\n          \"type\": \"PDF\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/modules",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "modules"
+              ]
+            },
+            "description": "Membuat modul/submodule/content baru beserta materi dan file assets (Admin only).\n\nAset dengan path awalan 'temp/' akan otomatis dipindahkan ke permanent storage ('modules/assets/') dan disimpan dengan path permanen. Jika transaksi database gagal, file baru otomatis dibersihkan (rollback)."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Module",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"learningMaterials\": [\n    {\n      \"description\": \"Deskripsi materi pembelajaran yang telah diperbarui\",\n      \"assets\": [\n        {\n          \"id\": 1\n        },\n        {\n          \"title\": \"{{temp_asset_path}}\",\n          \"type\": \"PDF\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/modules/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "modules",
+                "1"
+              ]
+            },
+            "description": "Mengubah data modul/konten dan sinkronisasi aset (Admin only):\n- Deskripsi materi diperbarui.\n- File lama (contoh id: 1) dipertahankan agar tidak terhapus.\n- File baru (temp_asset_path) ditambahkan dan dipindahkan ke permanen storage."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Module",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/modules/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "modules",
+                "1"
+              ]
+            },
+            "description": "Menghapus modul berdasarkan ID (Admin only)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Question Management",
+      "item": [
+        {
+          "name": "Get Questions (List)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/questions?page=1&limit=10&search=",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "questions"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "Mengambil daftar soal (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Question Detail by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/questions/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "questions",
+                "1"
+              ]
+            },
+            "description": "Mengambil detail soal berdasarkan ID (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Question",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200 or 201', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"module_id\": 1,\n  \"question\": \"Komponen motherboard manakah yang bertanggung jawab menghubungkan CPU dengan RAM?\",\n  \"form_type\": \"pre_test\",\n  \"status\": true,\n  \"options\": [\n    {\n      \"answer\": \"Pilihan A: Northbridge / Chipset Utama\",\n      \"is_correct\": true\n    },\n    {\n      \"answer\": \"Pilihan B: Southbridge / I/O Controller Hub\",\n      \"is_correct\": false\n    },\n    {\n      \"answer\": \"Pilihan C: Baterai CMOS\",\n      \"is_correct\": false\n    },\n    {\n      \"answer\": \"Pilihan D: SATA Controller\",\n      \"is_correct\": false\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/questions",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "questions"
+              ]
+            },
+            "description": "Membuat soal baru beserta opsi (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Question",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"module_id\": 1,\n  \"question\": \"Komponen motherboard manakah yang bertanggung jawab menghubungkan CPU dengan RAM (Diperbarui)?\",\n  \"form_type\": \"post_test\",\n  \"status\": true,\n  \"options\": [\n    {\n      \"answer\": \"Pilihan A: Northbridge / Chipset Utama\",\n      \"is_correct\": false\n    },\n    {\n      \"answer\": \"Pilihan B: Southbridge / I/O Controller Hub\",\n      \"is_correct\": true\n    },\n    {\n      \"answer\": \"Pilihan C: Baterai CMOS\",\n      \"is_correct\": false\n    },\n    {\n      \"answer\": \"Pilihan D: SATA Controller\",\n      \"is_correct\": false\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/questions/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "questions",
+                "1"
+              ]
+            },
+            "description": "Mengubah data soal berdasarkan ID (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Question",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/questions/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "questions",
+                "1"
+              ]
+            },
+            "description": "Menghapus soal berdasarkan ID (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Import Questions Excel",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/questions/import",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "questions",
+                "import"
+              ]
+            },
+            "description": "Import soal dari file Excel (Admin only)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Class Management",
+      "item": [
+        {
+          "name": "Get All Classes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/classes?page=1&limit=10&search=&sort=id&sortType=ASC",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "classes"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maksimal 100"
+                },
+                {
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "key": "sort",
+                  "value": "id",
+                  "description": "id | name | created_at | updated_at"
+                },
+                {
+                  "key": "sortType",
+                  "value": "ASC",
+                  "description": "ASC | DESC"
+                }
+              ]
+            },
+            "description": "Mendapatkan daftar kelas dengan paginasi (limit maks 100), pengurutan, dan pencarian (Admin & Instruktur)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Class Detail by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/classes/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "classes",
+                "1"
+              ]
+            },
+            "description": "Mendapatkan detail kelas beserta anggota siswa (Admin & Instruktur)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Class",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kelas D\"\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/classes",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "classes"
+              ]
+            },
+            "description": "Membuat kelas baru (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Class",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kelas A Updated\"\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/classes/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "classes",
+                "1"
+              ]
+            },
+            "description": "Mengubah data kelas berdasarkan ID (Admin only). Body tidak boleh kosong (.min(1))."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Class",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/classes/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "classes",
+                "1"
+              ]
+            },
+            "description": "Menghapus kelas berdasarkan ID (Admin only). Ditolak (409) jika kelas masih digunakan oleh jadwal tes."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Test Management",
+      "item": [
+        {
+          "name": "Get All Tests",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/tests?page=1&limit=10&search=&module_id=&class_id=&schedule_type=&status=",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tests"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maksimal 100"
+                },
+                {
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "key": "module_id",
+                  "value": ""
+                },
+                {
+                  "key": "class_id",
+                  "value": ""
+                },
+                {
+                  "key": "schedule_type",
+                  "value": "",
+                  "description": "pre_test | post_test"
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "Active | Inactive | Draft"
+                }
+              ]
+            },
+            "description": "Mendapatkan daftar jadwal tes dengan paginasi (limit maks 100), filter modul/kelas/tipe/status (Admin, Instruktur & Siswa). Untuk Siswa, otomatis hanya menampilkan jadwal berstatus Active sesuai class_id siswa."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Tests (Siswa)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_student}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/tests?page=1&limit=10",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tests"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maksimal 100"
+                }
+              ]
+            },
+            "description": "Mendapatkan daftar jadwal tes khusus untuk Siswa yang sedang login (hanya jadwal berstatus Active milik kelas siswa tersebut)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Test Detail by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/tests/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tests",
+                "1"
+              ]
+            },
+            "description": "Mendapatkan detail jadwal tes beserta modul dan kelas terkait (Admin, Instruktur & Siswa). Untuk Siswa, hanya dapat mengakses jadwal Active milik kelasnya sendiri."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Test",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"module_id\": 1,\n  \"class_id\": 1,\n  \"title\": \"Pre-test Motherboard Kelas A\",\n  \"schedule_type\": \"pre_test\",\n  \"date\": \"2027-06-01T09:00:00.000Z\",\n  \"duration_minutes\": 60,\n  \"max_question\": 5,\n  \"status\": \"Active\",\n  \"is_locked\": false\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/tests",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tests"
+              ]
+            },
+            "description": "Membuat jadwal tes baru ditujukan ke satu class_id (Admin only). Field title wajib diisi (required & trimmed), date minimal waktu sekarang (min 'now'), dan status hanya menerima 'Active', 'Inactive', atau 'Draft'."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Test",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Pre-test Motherboard Kelas A (Revisi)\",\n  \"class_id\": 1,\n  \"duration_minutes\": 75,\n  \"status\": \"Active\"\n}"
+            },
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/tests/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tests",
+                "1"
+              ]
+            },
+            "description": "Mengubah jadwal tes (Admin only). Body tidak boleh kosong (.min(1)). Perubahan module_id, schedule_type, atau max_question akan memvalidasi ulang ketersediaan jumlah soal aktif di bank soal (422 jika kurang). Perubahan class_id akan ditolak (409) jika tes sudah memiliki attempt siswa."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Test",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token_admin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{desktop_pusdatin_2026}}/api/v1/tests/1",
+              "host": [
+                "{{desktop_pusdatin_2026}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tests",
+                "1"
+              ]
+            },
+            "description": "Menghapus jadwal tes berdasarkan ID dalam satu transaksi database (Admin only). Ditolak (409) jika sudah memiliki attempt siswa (RESTRICT FK)."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
